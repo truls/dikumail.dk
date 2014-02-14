@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<p>Please sign in with your mailman credentials</p>
+
+<form method="post" action="{{ redir }}">
+  <input type="hidden" name="auth" value="1" />
+  <label>
+    <div>Primary address of mailman list</div>
+    <input type="text" name="listaddr" value="{{ form['listaddr'] }}"/>{{ error('listaddr') }}
+  </label>
+  <label>
+    <div>List administrator email address</div>
+    <input type="text" name="email" value="{{ form['email'] }}"/>{{ error('email') }}
+  </label>
+  <label>
+    <div>List administrator password</div>
+    <input type="password" name="password" />{{ error('password') }}
+  </label><br />
+  <input type="submit" value="Login" />
+</form>
+
+
+{% endblock %}

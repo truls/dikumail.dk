@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+Rename the list {{ list }}
+
+<form method="post" action="/rename-list.py">
+  <input type="hidden" name="rename" value="true" />
+  <label for="newname">New name of the list (full address name@domain.com)</label>
+  <input type="text" id="newname" name="newname" value="{{ form['newname'] }}" />{% error('newname') %}
+  <label>
+    <input type="checkbox" name="createalias" value="1" {% if form['newname'].value == "1" %}checked="checked" {% endif %} /> Create alias from the old name to the new name
+  </label>
+  <input type="submit" value="Rename" />
+</form>
+
+
+ 

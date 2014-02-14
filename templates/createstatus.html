@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% if state == "sent" %}
+<p>An email has been sent to {{ form['email'] }} containing a confirmation link. Please open the link in your browser in order to create the mailing list.</p>
+{% elif state == "exists" %}
+<p>The list you are trying to create already exists</p>
+{% elif state == "success" %}
+<p>Your list was successfully created. You should receive an email from Mailman wth further information about your list momentarily. It may take up to 5 minutes before your list is able to receive emails.</p>
+{% elif state == "notoken" %}
+<p>Invalid token. It either never existed or you let it expire.</p>
+{% else %}
+<p>Unknown message</p>
+{% endif %}
+{% endblock %}

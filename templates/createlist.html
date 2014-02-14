@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h3>About dikumail.dk</h3>
+
+<p>Welcome to dikumail.dk. This service aims to provide free,
+flexible and customizable hosting of mailing lists for DIKU studends. This
+service was created in Febuary 2014 in response to DIKU shutting down its old
+email system and replacing it with a much less capable Exchange based
+solution.</p>
+
+<p>Anybody who is afiliated with DIKU (Department of Computer Science,
+University of Copenhagen) can freely use this service for hosting mailman lists
+</p>
+
+<p>By default, all lists are created under the dikumail.dk domain, although it
+is possible to use your own domain by using the following DNS configuration
+<pre>
+domain IN MX 10 mx1.terrifyinglytrue.eu
+domain IN MX 20 mx2.terrifyinglytrue.eu
+</pre>
+</p>
+<h3>Create a new list</h3>
+<p>Fill out the form below to create a new mailman list</p>
+<form method="post" action="create-list.py">
+  <input type="hidden" name="listrequest" value="true22" />
+  <label>
+    <div>Desired list name</div><input style="display: block;" type="text" name="listname" value="{{ form['listname'].value }}"/>{{ error("listname") }}
+  </label>
+  <label>
+    <div>Email address (will also be used as initial list administrator)</div>
+    <input type="text" name="email" value="{{ form['email'].value }}" />{{ error('email') }}
+  </label>
+  <p>Which domain would you like to use for your list</p>
+  
+  <ul>
+    <li>
+	<label>
+	  <input type="radio" name="domaintype" {% if form['domaintype'].value == "0" %}checked="checked"{% endif %}  value="0"/><span class="inline">Use listname@dikumail.dk</span>
+	</label>
+    </li>
+    <li>
+      <label>
+	<input type="radio" name="domaintype" value="1" {% if form['domaintype'].value == "1" %}checked="checked"{% endif %} /><span class="inline">Use listname@yourdomain.com with MX</span>
+      </label>
+      <p>Please see above note about DNS configuration</p>
+      <label>
+	<div>Your domain</div>
+	<input type="text" name="domainname" value="{% if form['domaintype'] == '1' %}{{ form['domainname'].value }}{% endif %}" />{{ error('domainname') }}
+	</label>
+    </li>
+    <!--<li>
+	<label>
+	  <input type="radio" name="domain" value="3" /><span>Use listname@yourdomain.com without MX</span>
+	</label>
+	<p>In order to use this configuration you must set the correct aliases
+on your server. If you use SPF without setting an outgoing proxy for list
+messages below you must allow messages originating from your domain to be sent
+from 213.239.205.47</p> <label>
+	<div>Your domain</div>
+
+	<input type="text" name="advdomain" />
+	</label>
+	<label>
+	<div>(optional) Server to use as proxy for messages originating form the list</div>
+	<input type="text" name="outproxy" />
+	
+    </li>-->
+  </ul>
+  
+  <label>
+    <div>Which lecturer at DIKU prefers to speak swedish</div>
+    <input type="text" name="captcha" value="{{ form['captcha'] }}" /> {{ error('captcha') }}
+  </label>
+  <button type="submit">Send!</button>
+</form>
+{% endblock %}
