@@ -1,13 +1,15 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<h3>About dikumail.dk</h3>
+{#<h3>About dikumail.dk</h3>#}
 
-<p>Welcome to dikumail.dk. This service aims to provide free,
+<p>Welcome to dikumail.dk. Mailman hosting for DIKU students</p>
+
+{#<p>Welcome to dikumail.dk. This service aims to provide free,
 flexible and customizable hosting of mailing lists for DIKU studends. This
 service was created in Febuary 2014 in response to DIKU shutting down its old
 email system and replacing it with a much less capable Exchange based
-solution.</p>
+solution.</p>#}
 
 <p>Anybody who is afiliated with DIKU (Department of Computer Science,
 University of Copenhagen) can freely use this service for hosting mailman lists
@@ -28,7 +30,7 @@ domain IN MX 20 mx2.terrifyinglytrue.eu
     <div>Desired list name</div><input style="display: block;" type="text" name="listname" value="{{ form['listname'].value }}"/>{{ error("listname") }}
   </label>
   <label>
-    <div>Email address (will also be used as initial list administrator)</div>
+    <div>Your email address (will also be used as initial list administrator)</div>
     <input type="text" name="email" value="{{ form['email'].value }}" />{{ error('email') }}
   </label>
   <p>Which domain would you like to use for your list</p>
@@ -49,7 +51,7 @@ domain IN MX 20 mx2.terrifyinglytrue.eu
 	<input type="text" name="domainname" value="{% if form['domaintype'] == '1' %}{{ form['domainname'].value }}{% endif %}" />{{ error('domainname') }}
 	</label>
     </li>
-    <!--<li>
+    {#<li>
 	<label>
 	  <input type="radio" name="domain" value="3" /><span>Use listname@yourdomain.com without MX</span>
 	</label>
@@ -65,7 +67,7 @@ from 213.239.205.47</p> <label>
 	<div>(optional) Server to use as proxy for messages originating form the list</div>
 	<input type="text" name="outproxy" />
 	
-    </li>-->
+    </li>#}
   </ul>
   
   <label>
