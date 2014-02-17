@@ -217,7 +217,7 @@ class MMList(object):
             # Allow messages from listname@domain
             self.mlist.acceptable_aliases = "%s@%s\n" % (self.list, self.domain)
 
-            self.mlist.subject_prefix = "[%s] " % (self.lst)
+            self.mlist.subject_prefix = "[%s] " % (self.list)
             self.mlist.msg_footer = ""
             self.mlist.subscribe_policy = 2 # Confirm and approve
             self.mlist.max_message_size = 20480 # 20M
