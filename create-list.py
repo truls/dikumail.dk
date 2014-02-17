@@ -34,7 +34,7 @@ def main():
                'email': ('^[a-zA-Z][a-zA-Z0-9-_@+.]{2,}$', '', 'Invalid email'),
                 'domaintype': ('^[0-9]+$', "0", ''),
                 'domainname': ('^[a-zA-Z0-9-.]{4,}$', '', 'Invalid domainname'),
-                 'turing': ('^.*[jJ][yY][rR][kK][iI].*$', '', 'Wrong answer')}
+                 'captcha': ('^.*[jJ][yY][rR][kK][iI].*$', '', 'Wrong answer')}
     #domaintypefield = FormField('domaintype' guard='regex')
     #domainfield = FormField('domainname', guard='regex',
     #                        valid_if = lambda: domaintypefield.value == '0',
