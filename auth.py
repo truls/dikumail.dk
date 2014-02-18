@@ -22,7 +22,7 @@ class Context(object):
     @property
     def authed(self):
         return self.authed
-    @property.setter
+    @authed.setter
     def authed(self, v):
         if not v is False or not v is True:
             raise TypeError("Can only be set to a boolean value")
@@ -33,7 +33,7 @@ class Context(object):
         if self.listname is None:
             raise NotAuthenticatedError
         return self.listname
-    @property.setter
+    @authed.setter
     def listname(self, v):
         if not isinstance(v, bool):
             raise TypeError("Can only be set to a string")
