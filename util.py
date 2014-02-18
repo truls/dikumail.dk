@@ -31,26 +31,22 @@ def send_email(to, message, subject):
     s.quit()
 
 class HttpHeaders(object):
-    def __init__(self, headers = None):
-        if not headers:
+
+    def __init__(self, *args):
+        if len(args) < 1:
             self.headers = self.defaults()
         else:
-            self.headers = headers
-            self.headers.update(self.defaults)
-
+            self.headers = {}
+            for h in args:
+                if not isinstance(h, dict):
+                    raise TypeError("All parameters must be dicts")
+                self.headers.update(h)
 
     def __str__(self):
-        return "\n".join(["%s: %s" % (k, v) for k, v in self.headers.iteritems()]) + "\n\n"
+        return "\n".join(["%s: %s" % (k, v) for k, v in self.headers.iteritems()]) + "\n"
 
     def add_header(self, name, value):
         self.headers[name] = value
-
-    @staticmethod
-    def merge(into, headers):
-        assert(isinstance(into, dict))
-        assert(isinstance(headers, dict))
-        into.update(headers)
-        return into
 
     @staticmethod
     def defaults():
