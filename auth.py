@@ -102,7 +102,7 @@ def show_form():
                 
             # Write headers for redirection
             print str(HttpHeaders({'Status': "303 See Other",
-                                   'Set-Cookie': 'authkey=' + token
+                                   'Set-Cookie': 'authkey=' + token,
                                    'Location': tmgr.get_by_token(redir)}))
             return
     
