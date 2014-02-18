@@ -15,8 +15,9 @@ jjenv = Environment(loader=FileSystemLoader(os.path.join(os.path.realpath(os.pat
 tokenlist = "/var/cache/token_cache"
 
 class Context(object):
-    self.authed = False
-    self.listname = None
+    def __init__(self):
+        self.authed = False
+        self.listname = None
 
     @property
     def authed(self):
