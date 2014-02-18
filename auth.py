@@ -1,4 +1,5 @@
 #!/usr/bin/python2.7
+# -*- coding: utf-8 -*-
 
 import cgi
 import cgitb
@@ -22,9 +23,8 @@ def is_authed():
     Find a nice way to refresh the auth token upon validation so
     it doesn't just expire after one hour
     """
-    
+
     tmgr = TokenHandler(tokenlist)
-    #cgiform = cgi.FieldStorage()
 
     try:
         token = Cookies(os.environ['HTTP_COOKIE'])['authkey']
@@ -32,7 +32,7 @@ def is_authed():
         token = ''
 
     try:
-        tmgr.get_by_token(token)
+        tmgr.get(lambda token, when, data: token == token and "auth" in data)
         # TODO: Auth token should be renewed here
         return True
     except Exception as e:
@@ -65,25 +65,19 @@ def show_form():
 
     cgiform = cgi.FieldStorage()
     #print cgiform
-
-    #if "redir" in cgiform:
-    #    redir = cgiform['redir'].value
-    #else:
-    #    redir = '/admin.py'
+    
     tmgr = TokenHandler(tokenlist)
     
     # FIXME: Don't use input from browser here
-    redir = tmgr.new(os.environ['REQUEST_URI'])
+    if not "redir" in cgiform:
+        redir = tmgr.new(os.environ['REQUEST_URI'])
+    else:
+        redir = cgiform['redir'].value
 
 
     if "auth" in cgiform:
         form.readform(cgiform)
         
-        #print 'Content-Type: text/html'
-        #print 'Set-Cookie: authkey=foo;'
-        #print 'Set-Cookie: authbar=bar;'
-        #print ''
-            
         mmlist = None
         # If from is completely filled out, check that list exists
         if form.valid:
@@ -104,19 +98,15 @@ def show_form():
         # If credentails are ok, set authcookie and authenticate
         if form.valid:
             # Everything is ok. Authenticate!
-            token = tmgr.new(mmlist.name)
+            token = tmgr.new(params = "auth " + mmlist.name)
                 
             # Write headers for redirection
-            print 'Status: 303 See Other'
-            print 'Set-Cookie: authkey=' + token
-            print 'Location: ' + tmgr.get_by_token(redir)
-            print ''
+            print str(HttpHeaders({'Status':, "303 See Other",
+                                   'Set-Cookie': 'authkey=' + token
+                                   'Location': tmgr.get_by_token(redir)}))
             return
-        
-    print 'Content-Type: text/html'
-    print 'Cache-Control: no-cache'
-    print 'Pragma: no-cache'
-    print ''
+    
+    print str(HttpHeaders())
         
     tmpl = jjenv.get_template('auth.html')
     print tmpl.render(redir=redir, form=form)

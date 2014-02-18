@@ -3,7 +3,7 @@
 
 <p>Please sign in with your mailman credentials</p>
 
-<form method="post" action="{{ redir }}">
+<form method="post" action="auth.py?redir={{ redir }}">
   <input type="hidden" name="auth" value="1" />
   <label>
     <div>Primary address of mailman list</div>
