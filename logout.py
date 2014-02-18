@@ -21,8 +21,8 @@ def main():
         pass
     except NoSuchTokenError:
         pass
-    print str(HttpHeaders(HttpHeaders.defaults()),
-              {'Set-Cookie': 'authkey=invalid'})
+    print str(HttpHeaders(HttpHeaders.defaults(),
+              {'Set-Cookie': 'authkey=invalid'}))
     tmpl = jjenv.get_template('logout.html')
     print tmpl.render()
 
