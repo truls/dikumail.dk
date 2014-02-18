@@ -15,7 +15,7 @@ import auth
 
 @auth.authorize
 def main():
-    print str(HttpHeader())
+    print str(HttpHeaders())
     print "foobar"
 
 if __name__ == "__main__":
