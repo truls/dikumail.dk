@@ -16,28 +16,28 @@ tokenlist = "/var/cache/token_cache"
 
 class Context(object):
     def __init__(self):
-        self.authed = False
-        self.listname = None
+        self.authed_v = False
+        self.listname_v = None
 
     @property
     def authed(self):
-        return self.authed
+        return self.authed_v
     @authed.setter
     def authed(self, v):
-        if not v is False or not v is True:
+        if not (v is False or v is True):
             raise TypeError("Can only be set to a boolean value")
-        self.authed = v
+        self.authed_v = v
 
     @property
     def listname(self):
-        if self.listname is None:
+        if self.listname_v is None:
             raise NotAuthenticatedError
-        return self.listname
+        return self.listname_v
     @authed.setter
     def listname(self, v):
         if not isinstance(v, bool):
             raise TypeError("Can only be set to a string")
-        self.listname = v
+        self.listname_v = v
 context = Context()
 
 class NotAuthenticatedError(Exception):
