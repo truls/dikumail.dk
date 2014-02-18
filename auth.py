@@ -111,10 +111,8 @@ def show_form():
     tmpl = jjenv.get_template('auth.html')
     print tmpl.render(redir=redir, form=form)
         
-    #print os.environ
-
 def main():
-    pass
+    show_form()
     
 if __name__ == "__main__":
     main()
