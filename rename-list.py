@@ -15,8 +15,7 @@ import auth
 
 @auth.authorize
 def main():
-    print "Content-Type: text/html"
-    print ''
+    print str(HttpHeader())
     print "foobar"
 
 if __name__ == "__main__":
