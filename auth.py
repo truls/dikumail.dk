@@ -101,7 +101,7 @@ def show_form():
             token = tmgr.new(params = "auth " + mmlist.name)
                 
             # Write headers for redirection
-            print str(HttpHeaders({'Status':, "303 See Other",
+            print str(HttpHeaders({'Status': "303 See Other",
                                    'Set-Cookie': 'authkey=' + token
                                    'Location': tmgr.get_by_token(redir)}))
             return
