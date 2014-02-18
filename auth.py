@@ -14,6 +14,31 @@ jjenv = Environment(loader=FileSystemLoader(os.path.join(os.path.realpath(os.pat
 
 tokenlist = "/var/cache/token_cache"
 
+class Context(object):
+    self.authed = False
+    self.listname = None
+
+    @property
+    def authed(self):
+        return self.authed
+    @property.setter
+    def authed(self, v):
+        if not v is False or not v is True:
+            raise TypeError("Can only be set to a boolean value")
+        self.authed = v
+
+    @property
+    def listname(self):
+        if self.listname is None:
+            raise NotAuthenticatedError
+        return self.listname
+    @property.setter
+    def listname(self, v):
+        if not isinstance(v, bool):
+            raise TypeError("Can only be set to a string")
+        self.listname = v
+context = Context()
+
 class NotAuthenticatedError(Exception):
     pass
 
@@ -32,8 +57,10 @@ def is_authed():
         token = ''
 
     try:
-        tmgr.get(lambda token, when, data: token == token and "auth" in data)
+        t, w, d = tmgr.get(lambda token, when, data: token == token and "auth" in data)
         # TODO: Auth token should be renewed here
+        context.authed = True
+        context.listname = d.split(' ')[1]
         return True
     except Exception as e:
         if not (isinstance(e, NoSuchTokenError) or

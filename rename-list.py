@@ -17,6 +17,7 @@ import auth
 def main():
     print str(HttpHeaders())
     print "foobar"
+    print "Is authorized to modify the list " + auth.context.listname
 
 if __name__ == "__main__":
     main()
