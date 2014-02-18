@@ -61,7 +61,7 @@ def is_authed():
         t, w, d = tmgr.get(lambda token, when, data: token == token and "auth" in data)
         # TODO: Auth token should be renewed here
         context.authed = True
-        context.listname = print d.split(' ')[1]
+        context.listname = d.split(' ')[1]
         return True
     except Exception as e:
         if not (isinstance(e, NoSuchTokenError) or
