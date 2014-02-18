@@ -30,6 +30,32 @@ def send_email(to, message, subject):
     s.sendmail(fr, to, msg.as_string())
     s.quit()
 
+class HttpHeaders(object):
+    def __init__(self, headers = None):
+        if not headers:
+            self.headers = self.defaults()
+        else
+            self.headers = headers
+            self.headers.update(self.defaults)
+
+
+    def __str__(self):
+        return "\n".join(["%s: %s" % (k, v) for k, v in self.headers.iteritems()]) + "\n\n"
+
+    def add_header(self, name, value):
+        self.headers[name] = value
+
+    @staticmethod
+    def merge(into, headers):
+        assert(isinstance(into, dict))
+        assert(isinstance(headers, dict))
+        into.update(headers):
+        return into
+
+    @staticmethod
+    def defaults():
+        return {'Content-Type': 'text/html; encoding=utf-8'}
+
 class Cookies(object):
     def __init__(self, cstr):
         self.cookies = {}
