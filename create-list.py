@@ -27,8 +27,7 @@ Enjoy your list!
     send_email(to, message % (name, token), "Confirm your mailing list")
 
 def main():
-    print 'Content-Type: text/html; charset=utf-8'
-    print ''
+    print str(HttpHeaders())
 
     formdef = {'listname': ('^[a-zA-Z][a-zA-Z0-9-]{2,}$', '', 'Invalid listname'),
                'email': ('^[a-zA-Z][a-zA-Z0-9-_@+.]{2,}$', '', 'Invalid email'),
