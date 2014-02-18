@@ -34,7 +34,7 @@ class HttpHeaders(object):
     def __init__(self, headers = None):
         if not headers:
             self.headers = self.defaults()
-        else
+        else:
             self.headers = headers
             self.headers.update(self.defaults)
 
@@ -49,7 +49,7 @@ class HttpHeaders(object):
     def merge(into, headers):
         assert(isinstance(into, dict))
         assert(isinstance(headers, dict))
-        into.update(headers):
+        into.update(headers)
         return into
 
     @staticmethod
