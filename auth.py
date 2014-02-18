@@ -24,7 +24,7 @@ class Context(object):
         return self.authed_v
     @authed.setter
     def authed(self, v):
-        if not (v is False or v is True):
+        if not isinstance(v, bool):
             raise TypeError("Can only be set to a boolean value")
         self.authed_v = v
 
@@ -35,7 +35,7 @@ class Context(object):
         return self.listname_v
     @authed.setter
     def listname(self, v):
-        if not isinstance(v, bool):
+        if not isinstance(v, str):
             raise TypeError("Can only be set to a string")
         self.listname_v = v
 context = Context()
