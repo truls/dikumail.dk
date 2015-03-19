@@ -22,7 +22,7 @@ http://www.dikumail.dk/create-list.py?confirm=%s
 
 Enjoy your list!
 
-- dikulist.dk
+- dikumail.dk
 """
     send_email(to, message % (name, token), "Confirm your mailing list")
 
@@ -32,9 +32,9 @@ def main():
 
     formdef = {'listname': ('^[a-zA-Z][a-zA-Z0-9-]{2,}$', '', 'Invalid listname'),
                'email': ('^[a-zA-Z][a-zA-Z0-9-_@+.]{2,}$', '', 'Invalid email'),
-                'domaintype': ('^[0-9]+$', "0", ''),
-                'domainname': ('^[a-zA-Z0-9-.]{4,}$', '', 'Invalid domainname'),
-                 'captcha': ('^.*[jJ][yY][rR][kK][iI].*$', '', 'Wrong answer')}
+               'domaintype': ('^[0-9]+$', "0", ''),
+               'domainname': ('^[a-zA-Z0-9-.]{4,}$', '', 'Invalid domainname'),
+               'captcha': ('^.*[jJ][yY][rR][kK][iI].*$', '', 'Wrong answer')}
     #domaintypefield = FormField('domaintype' guard='regex')
     #domainfield = FormField('domainname', guard='regex',
     #                        valid_if = lambda: domaintypefield.value == '0',
