@@ -131,8 +131,8 @@ class ListAlreadyExists(Exception):
 class MMList(object):
 
     def __init__(self, lst, domain):
-        self.list = lst
-        self.domain = domain
+        self.list = lst.lower()
+        self.domain = domain.lower()
         try:
             self.mlist = MailList.MailList(self.name, lock=0)
         except Errors.MMUnknownListError:
