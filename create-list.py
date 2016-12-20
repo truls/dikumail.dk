@@ -40,12 +40,11 @@ def main():
     #                        valid_if = lambda: domaintypefield.value == '0',
     #                        valid_if = lambda x: x['domaintype'].value == '0'
     formdata = FormData(formdef)
-    
+
     # Decide handler
-    ferror = {}    
+    ferror = {}
     form = cgi.FieldStorage()
 
-    
     if "listrequest" in form:
 
         tmgr = TokenHandler(tokenlist)
@@ -73,10 +72,10 @@ def main():
                 pass
             except TokenExpiredError:
                 pass
-           
+
         if formdata.valid:
             tmpl = jjenv.get_template('createstatus.html')
-            
+
             # Grab a token
             token = tmgr.new("%s %s %s" % (formdata['listname'].value, formdata['domainname']
                                            , formdata["email"].value))
@@ -84,7 +83,7 @@ def main():
             send_tokenmail(form["email"].value,
                            MMList(form['listname'].value,
                                   formdata['domainname']).name, token)
-            
+
             print tmpl.render(state="sent", form=formdata)
             return
 
@@ -109,12 +108,9 @@ def main():
 
         print tmpl.render(state="success")
         return
-    
+
     tmpl = jjenv.get_template('createlist.html')
     print tmpl.render(form=formdata)
 
 if __name__ == "__main__":
     main()
-    
-
-

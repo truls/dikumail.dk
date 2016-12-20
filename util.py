@@ -1,4 +1,3 @@
-
 import fcntl
 import hashlib
 import time
@@ -9,7 +8,6 @@ import re
 
 import smtplib
 from email.mime.text import MIMEText
-            
 
 sys.path.append("/var/lib/mailman")
 from Mailman import mm_cfg
@@ -20,7 +18,7 @@ from Mailman import Errors
 
 def send_email(to, message, subject):
     fr = 'mailman-owner@dikumail.dk'
-    
+
     msg = MIMEText(message)
     msg['Subject'] = subject
     msg['To'] = to
@@ -54,11 +52,11 @@ class _FormField(object):
     When value is set to a string that doesn't match the validator
     regexp, the error message is set to default_error, value is
     cleared and the state switches to invalid
-    
+
     When error is modified, the value is cleared and the state
     switches to invalid
     """
-    
+
     def __init__(self, validator, default_value, default_error):
         self.validator = re.compile(validator)
         self.default_error = default_error
@@ -98,7 +96,7 @@ class _FormField(object):
         return self.value
     def __unicode__(self):
         return self.value
-    
+
 class FormData(object):
     def __init__(self, fdict):
         self.form = {}
@@ -127,7 +125,7 @@ class FormData(object):
 
 class ListAlreadyExists(Exception):
     pass
-    
+
 class MMList(object):
 
     def __init__(self, lst, domain):
@@ -177,18 +175,18 @@ class MMList(object):
             aliases = self.mlist.acceptable_aliases.split('\n')
             aliases.append(name)
             self.mlist.acceptable_aliases = '\n'.join(aliases)
-        
+
     def auth(self, contexts, password):
         return self.mlist.Authenticate(contexts, password, None)
-        
+
     def auth_admin(self, email, password):
         authcontexts = (mm_cfg.AuthListAdmin, mm_cfg.AuthSiteAdmin)
         siteowners = MMList(mm_cfg.MAILMAN_SITE_LIST, '').owners
-        
+
         # Check that email is a list administrator and is logging in with a list admin password
         return (email in self.mlist.owner or email in siteowners) and \
           self.mlist.Authenticate(authcontexts, password) in authcontexts
-    
+
     def create(self, email):
         if self.exists:
             raise ListAlreadyExists
@@ -203,7 +201,7 @@ class MMList(object):
         # TODO: Add some atomicity. We should roll back changes using
         #       a try/else if something (like MTA alias update) fails
         #       before the function terminates.
-        
+
         try:
             oldmask = os.umask(002)
             self.mlist.Create(self.name, email, pw_hashed, langs=langs,
@@ -221,7 +219,7 @@ class MMList(object):
             self.mlist.msg_footer = ""
             self.mlist.subscribe_policy = 2 # Confirm and approve
             self.mlist.max_message_size = 20480 # 20M
-            
+
             self.mlist.Save()
 
         finally:
@@ -268,12 +266,12 @@ class TokenHandler(object):
             token = self._rndhash()
             now = time.time() + self.validity
             f.write("%s %s %s\n" % (token, str(now), str(params)))
-            return token        
+            return token
 
     def get(self, pred):
         if not callable(pred):
             raise TypeError
-        
+
         for token, when, data in self._token_it():
             if pred(token, when, data):
                 if self._expired(when):
@@ -295,19 +293,19 @@ class TokenHandler(object):
             fcntl.flock(f, fcntl.LOCK_EX)
             for token, when, data in keep:
                 f.write(' '.join((token, str(when), data)))
-    
+
     def delete_token(self, token):
         self.delete(lambda t, a, b: t == token)
 
     def cleanup(self, token):
         self.delete(lambda a, b, c: True)
-    
+
     def _rndhash(self):
         with open("/dev/urandom", 'r+') as f:
             h = hashlib.sha1()
             h.update(f.read(20))
             return h.hexdigest()
-            
+
     def _token_it(self):
         with open(self.tokendb, 'r+') as f:
             fcntl.flock(f, fcntl.LOCK_EX)
@@ -317,7 +315,3 @@ class TokenHandler(object):
 
     def _expired(self, when):
         return time.time() > when
-            
-
-    
-
