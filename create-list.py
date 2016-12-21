@@ -60,7 +60,7 @@ def main():
             formdata["domainname"].value = 'dikumail.dk'
 
         if MMList(formdata["listname"].value,
-                  formdata["domainname"]).exists:
+                  formdata["domainname"].value).exists:
             formdata["listname"].error = "List already exists"
         else:
             try:
@@ -82,7 +82,7 @@ def main():
 
             send_tokenmail(form["email"].value,
                            MMList(form['listname'].value,
-                                  formdata['domainname']).name, token)
+                                  formdata['domainname'].value).name, token)
 
             print tmpl.render(state="sent", form=formdata)
             return
